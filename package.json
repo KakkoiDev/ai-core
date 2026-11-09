@@ -4,6 +4,11 @@
   "private": true,
   "type": "module",
   "exports": "./recovery.mjs",
-  "engines": { "node": ">=20" },
-  "scripts": { "test": "node --test" }
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node --test"
+  },
+  "types": "./recovery.d.mts"
 }
