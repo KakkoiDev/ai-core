@@ -50,17 +50,25 @@ export function createReasoningWatch() {
   };
 }
 
+export function detectActionLoop(steps) {
+  const current = steps.at(-1);
+  if (!current) return null;
+  const { callKey, resultKey, failed = false } = current;
+  const last = n => steps.slice(-n);
+  const six = last(6);
+  return steps.length >= 4 && last(4).every(s => s.callKey === callKey && s.resultKey === resultKey && (s.failed ?? false) === failed)
+    ? "repeated-result"
+    : steps.length >= 3 && last(3).every(s => s.callKey === callKey && s.failed)
+    ? "repeated-failure"
+    : six.length === 6 && six[0].callKey !== six[1].callKey && six.every((s, i) => s.callKey === six[i % 2].callKey)
+    ? "alternating-actions" : null;
+}
+
 export function createActionWatch() {
   let steps = [];
-  return ({ callKey, resultKey, failed = false }) => {
-    steps = [...steps, { callKey, resultKey, failed }].slice(-6);
-    const last = n => steps.slice(-n);
-    const pattern = steps.length >= 4 && last(4).every(s => s.callKey === callKey && s.resultKey === resultKey && s.failed === failed)
-      ? "repeated-result"
-      : steps.length >= 3 && last(3).every(s => s.callKey === callKey && s.failed)
-      ? "repeated-failure"
-      : steps.length === 6 && steps[0].callKey !== steps[1].callKey && steps.every((s, i) => s.callKey === steps[i % 2].callKey)
-      ? "alternating-actions" : null;
+  return step => {
+    steps = [...steps, step].slice(-6);
+    const pattern = detectActionLoop(steps);
     if (pattern) steps = [];
     return pattern;
   };
