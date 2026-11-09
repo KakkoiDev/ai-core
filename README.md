@@ -18,3 +18,5 @@ Import from `@kakkoidev/ai-core`. Use one watch per attempt (one action watch pe
 Rich AI Chat can map AI SDK answer and tool events to the progress watch while retaining answer buffering and Activity in its adapter. Pi Local Harness (PLH) can feed reasoning deltas and completed tool events from its Pi hooks; keep PLH's wake-up, task state and intervention messages in PLH. For either host, keep private prompts and traces out of the shared policy and tests.
 
 Commit the host lockfile and use `npm ci` when packaging the host. Run `npm test` for deterministic fault injection; these tests make no model or network calls.
+
+Version 0.2 also provides tool receipts, task checkpoints, targeted repair, context budgeting and structured recovery events. See the [integration guide](docs/integration.md) for API contracts and an end-to-end example.

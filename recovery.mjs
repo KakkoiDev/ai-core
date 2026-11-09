@@ -83,3 +83,5 @@ export function recoveryAction({
   if (hasRetainedResult) return "synthesize-without-tools";
   return toolMayHaveRun ? "stop" : "retry";
 }
+
+export { runWithReceipt, createCheckpoint, resumeCheckpoint, repairCandidate, budgetContext, recoveryEvent } from "./workflow.mjs";
