@@ -5,7 +5,9 @@
   "type": "module",
   "exports": {
     ".": "./recovery.mjs",
-    "./webmcp": "./webmcp.mjs"
+    "./webmcp": "./webmcp.mjs",
+    "./sse-bridge": "./sse-bridge/server.mjs",
+    "./sse-bridge/host": "./sse-bridge/host.mjs"
   },
   "engines": {
     "node": ">=20"
