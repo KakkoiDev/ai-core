@@ -20,3 +20,14 @@ Rich AI Chat can map AI SDK answer and tool events to the progress watch while r
 Commit the host lockfile and use `npm ci` when packaging the host. Run `npm test` for deterministic fault injection; these tests make no model or network calls.
 
 Version 0.2 also provides tool receipts, task checkpoints, targeted repair, context budgeting and structured recovery events. See the [integration guide](docs/integration.md) for API contracts and an end-to-end example.
+
+## Browser WebMCP board tools
+
+Import `registerRevisionedBoardTools` from `@kakkoidev/ai-core/webmcp`.
+The browser adapter registers `get_board` and `apply_board_edit` on the
+supplied WebMCP context. Pass the board's `getProject`, `editSchema`, and
+`applyEdits(project, edits)` functions, plus a
+`commitProject(project, message)` function that returns `{ ok: true }`
+after the write is accepted, or an error result. Use `isReady` to indicate
+whether a remote board is connected. The adapter handles tab-scoped revisions,
+while the application defines valid edits and commits them.
