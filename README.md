@@ -5,7 +5,7 @@ Small recovery policies for local model harnesses. One ES module, zero dependenc
 Install the public package from a pinned GitHub commit; no npm registry publication or GitHub credentials are needed.
 
 ```sh
-npm install @kakkoidev/ai-core@https://codeload.github.com/KakkoiDev/ai-core/tar.gz/refs/tags/v0.2.0
+npm install @kakkoidev/ai-core@https://codeload.github.com/KakkoiDev/ai-core/tar.gz/refs/tags/v0.3.0
 ```
 
 Import from `@kakkoidev/ai-core`. Use one watch per attempt (one action watch per task):
@@ -18,6 +18,14 @@ Import from `@kakkoidev/ai-core`. Use one watch per attempt (one action watch pe
 Rich AI Chat can map AI SDK answer and tool events to the progress watch while retaining answer buffering and Activity in its adapter. Pi Local Harness (PLH) can feed reasoning deltas and completed tool events from its Pi hooks; keep PLH's wake-up, task state and intervention messages in PLH. For either host, keep private prompts and traces out of the shared policy and tests.
 
 Commit the host lockfile and use `npm ci` when packaging the host. Run `npm test` for deterministic fault injection; these tests make no model or network calls.
+
+Version 0.3 adds turn policies for agent harnesses that drive local models (`turns.mjs`, measured on Gemma 4 and Qwen 3.8 in pi):
+
+- `classifyTurn()`: what a finished turn did: a tool call, an answer, a tool call written as text, a stated intent with no call, thinking only, empty, or cut off.
+- `parseTextToolCalls()`: recover tool calls a model wrote as text (`<tool> name {...}`, Gemma's `call:name{...}`, Qwen's `<tool_call>`, `<function=...>`, or a JSON object naming a tool), only for tools that exist. `parseLooseObject()` reads the JavaScript-like arguments without `eval`.
+- `turnRecovery()`: repair the text call, or send one short nudge, a bounded number of times.
+- `createStallWatch()`: a request that has produced nothing at all (counting thinking as activity) for too long.
+- `requestAdjustments()`: request fields a model needs, such as `reasoning_effort: "none"` for Gemma 4 on Ollama with thinking off.
 
 Version 0.2 also provides tool receipts, task checkpoints, targeted repair, context budgeting and structured recovery events. See the [integration guide](docs/integration.md) for API contracts and an end-to-end example.
 
