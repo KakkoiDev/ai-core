@@ -2,10 +2,10 @@
 
 Small recovery policies for local model harnesses. One ES module, zero dependencies, no provider SDK or background process. Requires Node 20+.
 
-Install the public package from a pinned GitHub commit; no npm registry publication or GitHub credentials are needed.
+Install the public package from the GitHub release tag below. It includes the exports documented on this page and requires no GitHub credentials.
 
 ```sh
-npm install @kakkoidev/ai-core@https://codeload.github.com/KakkoiDev/ai-core/tar.gz/refs/tags/v0.3.0
+npm install @kakkoidev/ai-core@https://codeload.github.com/KakkoiDev/ai-core/tar.gz/refs/tags/v0.4.1
 ```
 
 Import from `@kakkoidev/ai-core`. Use one watch per attempt (one action watch per task):
