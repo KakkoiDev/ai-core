@@ -12,6 +12,7 @@
   ],
   "optional": [
     { "part": "coding-boost", "kind": "extension", "why": "Coding rules, keyword guides, a wake-up to test unverified changes. agentic-v1..v3: gpt-oss 20B 2-5/5 across ~20 setups vs 5/5 bare on v2 and v3; Qwen 3.8 27B 3-5/5 vs 4-5/5 bare: no gain shown yet." },
+    { "part": "verify", "kind": "extension", "why": "Test yourself first, as a harness behavior for every task (asked for 2026-11-25): a change with no passing test run after it (pytest, npm test, ./check, ./fight, ...) wakes the agent to test it, plus a one-paragraph rule. Being A/B tested per kind of task in agentbench (coding, the arena gauntlet, arena analysis); not on by default until it shows a gain." },
     { "part": "async-rewake", "kind": "extension", "why": "Long jobs in the background, the agent woken when they finish: a convenience, not benched." }
   ]
 }
