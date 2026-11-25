@@ -1,0 +1,17 @@
+{
+  "about": "What a pi-based coding harness gives each model, from bench results (agentbench). A rule goes in only with a measured gain; candidates without one are listed under optional.",
+  "rules": [
+    {
+      "part": "command-timeout", "kind": "extension",
+      "why": "2026-11-24, agentic-v4: pi's bash tool has no default timeout; one command that never ended (DeepSeek fuzzing a calculator) used a task's whole 15 minutes. Every command stops after 120 s unless the model asks for more (600 s at most)."
+    },
+    {
+      "part": "local-model-guard", "kind": "extension", "when": { "notProviders": ["deepseek"], "model": "gemma" },
+      "why": "2026-11-14, agentic-v1: Gemma 4 26B solved 0/5 and 1/5 bare, with a 15-25 min hang every run (thinking-only turns, tool calls written as text); with the guard 3/5 in three runs, 4.6 min, no hang. Gemma 4 12B: 1/5 either way. Not on for Qwen 3.8 27B (4/5 either way, the guard took no action) or gpt-oss 20B (no gain)."
+    }
+  ],
+  "optional": [
+    { "part": "coding-boost", "kind": "extension", "why": "Coding rules, keyword guides, a wake-up to test unverified changes. agentic-v1..v3: gpt-oss 20B 2-5/5 across ~20 setups vs 5/5 bare on v2 and v3; Qwen 3.8 27B 3-5/5 vs 4-5/5 bare: no gain shown yet." },
+    { "part": "async-rewake", "kind": "extension", "why": "Long jobs in the background, the agent woken when they finish: a convenience, not benched." }
+  ]
+}

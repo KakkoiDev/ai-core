@@ -17,6 +17,21 @@ Import from `@kakkoidev/ai-core`. Use one watch per attempt (one action watch pe
 
 Rich AI Chat can map AI SDK answer and tool events to the progress watch while retaining answer buffering and Activity in its adapter. Pi Local Harness (PLH) can feed reasoning deltas and completed tool events from its Pi hooks; keep PLH's wake-up, task state and intervention messages in PLH. For either host, keep private prompts and traces out of the shared policy and tests.
 
+## Agent harness knowledge (0.4.0)
+
+What benching agents taught, for any harness to reuse (agentbox runs on it; agentbench measures it). Zero dependencies.
+
+- `@kakkoidev/ai-core/deepseek`: DeepSeek's hosted API. `deepseekRequest()` maps a client's thinking setting to
+  DeepSeek's two efforts (high, max), `createReasoningStore()` hands back the `reasoning_content` thinking mode with
+  tools needs, `deepseekPeak()` / `nextOffPeak()` / `deepseekCost()` for prices that double at peak, and
+  `createDeepSeekProxy()`: a loopback server that keeps the API key, logs every request's cost and stops at a cap.
+- `@kakkoidev/ai-core/sandbox`: `macSandboxProfile()`, a sandbox-exec profile for an agent on one folder: home folder
+  closed except what is listed, secrets always closed, a private temp folder, network only to the model's port.
+- `@kakkoidev/ai-core/providers`: `ollamaModels()`, `ollamaContext()` (the context a model really gets), `piProviders()`
+  (pi models.json entries, DeepSeek's thinking levels included) and `unknownModel()` (pi silently swaps unknown ids).
+- `@kakkoidev/ai-core/harness`: `harnessFor(model)`, the parts a model should get with the bench result behind each
+  (`harness-profiles.json`), and `commandTimeout()`.
+
 Commit the host lockfile and use `npm ci` when packaging the host. Run `npm test` for deterministic fault injection; these tests make no model or network calls.
 
 Version 0.3 adds turn policies for agent harnesses that drive local models (`turns.mjs`, measured on Gemma 4 and Qwen 3.8 in pi):

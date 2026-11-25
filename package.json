@@ -1,13 +1,18 @@
 {
   "name": "@kakkoidev/ai-core",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "type": "module",
   "exports": {
     ".": "./recovery.mjs",
     "./webmcp": "./webmcp.mjs",
     "./sse-bridge": "./sse-bridge/server.mjs",
-    "./sse-bridge/host": "./sse-bridge/host.mjs"
+    "./sse-bridge/host": "./sse-bridge/host.mjs",
+    "./deepseek": "./deepseek.mjs",
+    "./sandbox": "./sandbox.mjs",
+    "./providers": "./providers.mjs",
+    "./harness": "./harness.mjs",
+    "./harness-profiles.json": "./harness-profiles.json"
   },
   "engines": {
     "node": ">=20"
@@ -15,5 +20,6 @@
   "scripts": {
     "test": "node --test"
   },
-  "types": "./recovery.d.mts"
+  "types": "./recovery.d.mts",
+  "description": "Reusable knowledge for AI agent harnesses: recovery policies for local models, DeepSeek's API (thinking modes, reasoning hand-back, prices, a key-keeping proxy), a macOS sandbox profile, pi provider config, and per-model harness choices measured on benches."
 }
